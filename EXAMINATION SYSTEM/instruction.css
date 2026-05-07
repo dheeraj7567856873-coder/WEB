@@ -1,0 +1,79 @@
+/* Reset basic margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #4facfe, #00f2fe);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Main container */
+.container {
+    background: #ffffff;
+    padding: 30px;
+    width: 400px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Heading */
+.container h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* List styling */
+.container ul {
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+.container ul li {
+    margin: 10px 0;
+    font-size: 15px;
+    color: #555;
+}
+
+/* Button styling */
+button {
+    padding: 12px 25px;
+    background: #4facfe;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Button hover */
+button:hover {
+    background: #007bff;
+    transform: scale(1.05);
+}
+/* Timer box on right side */
+#timer-box {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #ffffff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 18px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+/* Red warning class */
+.warning {
+    color: red;
+    font-weight: bold;
+}

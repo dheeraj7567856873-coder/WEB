@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Page</title>
+    <link rel="stylesheet" href="quiz.css">
+</head>
+<body>
+    <div class="main-layout">
+        <div class="quiz-container">
+            <div class="timer" id="timer">60:00</div>
+            <h1>Quiz</h1>
+            <div class="progress">
+                Question <span id="currentQuestion">1</span> of <span id="totalQuestions">101</span>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+            <div class="question-container">
+                <div class="category" id="category">Category</div>
+                <div class="question" id="question">
+                    <h3>Loading question...</h3>
+                </div>
+            </div>
+            <div class="buttons">
+                <button id="previousBtn" disabled>Previous</button>
+                <button id="nextBtn">Next</button>
+            </div>
+        </div>
+        <div class="question-status-sidebar">
+            <h3>All Questions</h3>
+            <div class="question-grid" id="allQuestionsGrid"></div>
+        </div>
+    </div>
+    <script src="questions.js"></script>
+    <script src="quiz.js"></script>
+</body>
+</html>

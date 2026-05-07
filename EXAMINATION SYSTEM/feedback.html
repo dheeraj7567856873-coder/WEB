@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Feedback - Minor Project</title>
+    <link rel="stylesheet" href="feedback.css">
+</head>
+<body>
+    <div class="feedback-container">
+        <div class="feedback-header">
+            <h1>Time's Up!</h1>
+            <p>Your 1-hour quiz time has expired. Please provide your feedback before submitting.</p>
+        </div>
+
+        <div class="feedback-form">
+            <h2>Quiz Feedback</h2>
+            <form id="feedbackForm">
+                <div class="form-group">
+                    <label for="difficulty">How difficult was the quiz?</label>
+                    <select id="difficulty" required>
+                        <option value="">Select difficulty</option>
+                        <option value="very-easy">Very Easy</option>
+                        <option value="easy">Easy</option>
+                        <option value="moderate">Moderate</option>
+                        <option value="difficult">Difficult</option>
+                        <option value="very-difficult">Very Difficult</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="time-sufficient">Was 1 hour sufficient time?</label>
+                    <select id="time-sufficient" required>
+                        <option value="">Select answer</option>
+                        <option value="yes">Yes, plenty of time</option>
+                        <option value="just-enough">Just enough time</option>
+                        <option value="no">No, needed more time</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="comments">Additional Comments (Optional)</label>
+                    <textarea id="comments" rows="4" placeholder="Any suggestions or feedback about the quiz..."></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">Submit Quiz & Feedback</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="feedback.js"></script>
+</body>
+</html>
