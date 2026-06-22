@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+
+  <div class="calc" id="calc">
+    <div class="disp" id="disp">
+      <div class="expr-line" id="expr"></div>
+      <div class="num-line" id="num">0</div>
+    </div>
+
+    <div class="grid">
+      <button class="bf" id="ac"  onclick="pressAC()">AC</button>
+      <button class="bf"          onclick="pressSign()">+/−</button>
+      <button class="bf"          onclick="pressPct()">%</button>
+      <button class="bo" id="od"  onclick="pressOp('/')">÷</button>
+
+      <button class="bn" onclick="pressNum('7')">7</button>
+      <button class="bn" onclick="pressNum('8')">8</button>
+      <button class="bn" onclick="pressNum('9')">9</button>
+      <button class="bo" id="om"  onclick="pressOp('*')">×</button>
+
+      <button class="bn" onclick="pressNum('4')">4</button>
+      <button class="bn" onclick="pressNum('5')">5</button>
+      <button class="bn" onclick="pressNum('6')">6</button>
+      <button class="bo" id="os"  onclick="pressOp('-')">−</button>
+
+      <button class="bn" onclick="pressNum('1')">1</button>
+      <button class="bn" onclick="pressNum('2')">2</button>
+      <button class="bn" onclick="pressNum('3')">3</button>
+      <button class="bo" id="oa"  onclick="pressOp('+')">+</button>
+
+      <button class="bn bz"       onclick="pressNum('0')">0</button>
+      <button class="bn"          onclick="pressDot()">.</button>
+      <button class="be"          onclick="pressEq()">=</button>
+    </div>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+</html>
