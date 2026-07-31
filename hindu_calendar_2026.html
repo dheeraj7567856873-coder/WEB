@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 भारतीय पर्व कैलेंडर</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Baloo+Bhai+2:wght@500;600;700&family=Mukta:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #fef8ee;
+    --card-bg: #ffffff;
+    --ink: #3a2b1a;
+    --ink-soft: #8a7a63;
+    --gold: #e0a11c;
+    --gold-deep: #b9790a;
+    --marigold: #f5810c;
+    --rose: #e0507a;
+    --line: #f0e2c4;
+    --shadow: rgba(184,120,20,0.14);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 12% 6%, rgba(245,129,12,0.08), transparent 40%),
+      radial-gradient(circle at 92% 12%, rgba(224,80,122,0.08), transparent 45%),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Mukta', sans-serif;
+    min-height:100vh;
+    padding: 28px 16px 60px;
+  }
+  .header{ text-align:center; margin-bottom: 22px; }
+  .header .eyebrow{
+    font-family:'Baloo Bhai 2', sans-serif;
+    color:var(--gold-deep); letter-spacing:0.35em; font-size:12px;
+    text-transform:uppercase; margin-bottom:10px;
+  }
+  .header h1{
+    font-family:'Baloo Bhai 2', sans-serif; font-weight:700;
+    font-size:clamp(30px,5vw,46px); margin:0;
+    background:linear-gradient(90deg,var(--marigold),var(--rose));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .header p{
+    font-family:'Cormorant Garamond', serif; font-size:18px;
+    color:var(--ink-soft); margin-top:8px;
+  }
+  .diya-row{ display:flex; justify-content:center; gap:6px; margin:14px 0 20px; }
+  .diya{ font-size:18px; opacity:0.35; filter:grayscale(1); transition:all .4s; }
+  .diya.lit{ opacity:1; filter:none; text-shadow:0 0 10px rgba(245,129,12,0.4); }
+
+  .legend{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:14px;
+    margin-bottom:30px; font-size:12.5px; color:var(--ink-soft); font-weight:600;
+  }
+  .legend span{display:flex;align-items:center;gap:6px;}
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex-shrink:0;}
+
+  .grid{
+    max-width:1280px; margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(300px,1fr));
+    gap:20px;
+  }
+  .month{
+    background:var(--card-bg);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:16px 14px 14px;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 6px 20px var(--shadow);
+  }
+  .month::before{
+    content:""; position:absolute; top:-40px; right:-40px;
+    width:120px; height:120px;
+    background:radial-gradient(circle, rgba(245,129,12,0.10), transparent 70%);
+    pointer-events:none;
+  }
+  .month h2{
+    font-family:'Baloo Bhai 2', sans-serif;
+    margin:0 0 12px; font-size:19px; color:var(--gold-deep);
+    display:flex; align-items:baseline; justify-content:space-between;
+    position:relative;
+  }
+  .month h2 .num{ font-size:11px; color:var(--ink-soft); font-family:'Mukta',sans-serif; }
+
+  .weekdays{
+    display:grid; grid-template-columns:repeat(7,1fr);
+    margin-bottom:4px;
+  }
+  .weekdays span{
+    text-align:center; font-size:10.5px; letter-spacing:0.04em;
+    color:var(--ink-soft); font-weight:700; padding-bottom:6px;
+  }
+  .days{
+    display:grid; grid-template-columns:repeat(7,1fr);
+    grid-auto-rows:38px;
+    gap:3px;
+  }
+  .cell{
+    all:unset; cursor:default;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    border-radius:9px; position:relative;
+    font-size:12.5px; color:#c4b9a4;
+  }
+  .cell.empty{ visibility:hidden; }
+  .cell.today{ box-shadow:inset 0 0 0 1.5px var(--gold-deep); }
+  .cell.sun{ color:var(--rose); }
+  .cell.has-fest{
+    cursor:pointer; color:var(--ink); font-weight:700;
+    background:linear-gradient(160deg, #fff3d9, #ffe6c2);
+    box-shadow:0 2px 6px rgba(224,161,28,0.25);
+    transition:transform .15s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .cell.has-fest:hover{
+    background:linear-gradient(160deg, #ffe2ae, #ffd08a);
+    transform:scale(1.09);
+    box-shadow:0 6px 16px rgba(224,161,28,0.4);
+  }
+  .cell.has-fest:active{ transform:scale(0.98); }
+  .cell.has-fest:focus-visible{ outline:2px solid var(--marigold); outline-offset:1px; }
+  .fest-dots{ display:flex; gap:2px; margin-top:1px; }
+  .fest-dots i{ width:4.5px; height:4.5px; border-radius:50%; display:block; }
+
+  /* overlay */
+  .overlay{
+    position:fixed; inset:0; background:rgba(58,43,26,0.35);
+    backdrop-filter:blur(3px); display:none;
+    align-items:center; justify-content:center; z-index:50; padding:20px;
+  }
+  .overlay.show{ display:flex; }
+  .card{
+    background:linear-gradient(165deg, #ffffff, #fff8ea);
+    border:1px solid var(--line); border-radius:18px;
+    max-width:480px; width:100%; max-height:85vh; overflow-y:auto;
+    padding:30px 28px 26px; position:relative;
+    box-shadow:0 24px 60px rgba(58,43,26,0.22);
+    animation:rise .35s ease;
+  }
+  @keyframes rise{ from{opacity:0; transform:translateY(14px) scale(0.98);} to{opacity:1; transform:translateY(0) scale(1);} }
+  .card .close{
+    all:unset; position:absolute; top:14px; right:18px; cursor:pointer;
+    font-size:20px; color:var(--gold-deep); width:28px; height:28px;
+    display:flex; align-items:center; justify-content:center; border-radius:50%;
+  }
+  .card .close:hover{ background:rgba(224,161,28,0.14); }
+  .fest-block + .fest-block{ margin-top:22px; padding-top:20px; border-top:1px dashed var(--line); }
+  .card .badge{
+    font-family:'Baloo Bhai 2', sans-serif; font-size:12px; letter-spacing:0.12em;
+    text-transform:uppercase; margin-bottom:8px; display:inline-block;
+  }
+  .card h3{ font-family:'Baloo Bhai 2', sans-serif; font-size:24px; margin:0 0 4px; color:var(--gold-deep); }
+  .card .date-line{ font-family:'Cormorant Garamond', serif; font-size:16px; color:var(--ink-soft); margin-bottom:14px; }
+  .card .desc{ font-size:14.5px; line-height:1.7; color:var(--ink); margin-bottom:12px; }
+  .card .meta{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+  .card .meta span{
+    font-size:11px; background:rgba(245,129,12,0.10); border:1px solid var(--line);
+    color:var(--gold-deep); padding:4px 10px; border-radius:20px; font-weight:600;
+  }
+  footer{ text-align:center; margin-top:40px; font-family:'Cormorant Garamond', serif; color:var(--ink-soft); font-size:13px; }
+
+  @media (max-width:420px){
+    .days{ grid-auto-rows:32px; }
+    .cell{ font-size:11px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="eyebrow">विक्रम संवत् 2082–83</div>
+  <h1>2026 पर्व कैलेंडर</h1>
+  <p>तारीख़ पर क्लिक करें और पर्व की पूरी जानकारी पाएं</p>
+  <div class="diya-row" id="diyaRow"></div>
+</div>
+
+<div class="legend">
+  <span><i class="dot" style="background:#f5810c"></i>हिंदू पर्व</span>
+  <span><i class="dot" style="background:#2f8fd1"></i>राष्ट्रीय / सरकारी</span>
+  <span><i class="dot" style="background:#3cad5c"></i>इस्लामिक</span>
+  <span><i class="dot" style="background:#a24fd6"></i>सिख / जैन / बौद्ध</span>
+  <span><i class="dot" style="background:#e0507a"></i>ईसाई</span>
+  <span><i class="dot" style="background:#8a7a63"></i>अन्य दिवस</span>
+</div>
+
+<div class="grid" id="calendarGrid"></div>
+
+<footer>तिथियाँ चंद्र पंचांग पर आधारित हैं, स्थान अनुसार 1 दिन का अंतर संभव है 🪔</footer>
+
+<div class="overlay" id="overlay">
+  <div class="card" id="card">
+    <button class="close" id="closeBtn">✕</button>
+    <div id="cardBody"></div>
+  </div>
+</div>
+
+<script>
+const CAT = {
+  hindu: {color:"#f5810c", label:"हिंदू पर्व"},
+  national: {color:"#2f8fd1", label:"राष्ट्रीय दिवस"},
+  islamic: {color:"#3cad5c", label:"इस्लामिक पर्व"},
+  other_relig: {color:"#a24fd6", label:"सिख/जैन/बौद्ध"},
+  christian: {color:"#e0507a", label:"ईसाई पर्व"},
+  observance: {color:"#8a7a63", label:"विशेष दिवस"}
+};
+
+const MONTHS = ["जनवरी","फरवरी","मार्च","अप्रैल","मई","जून","जुलाई","अगस्त","सितंबर","अक्टूबर","नवंबर","दिसंबर"];
+const WEEKDAYS = ["र","सो","मं","बु","गु","शु","श"]; // Sun..Sat short Hindi
+const DAYS_IN_MONTH = [31,28,31,30,31,30,31,31,30,31,30,31];
+// day-of-week (0=Sun) of the 1st of each month, 2026 (verified against known festival weekdays)
+const START_DOW = [4,0,0,3,5,1,3,6,2,4,0,2];
+
+const DAY_NAME = ["रविवार","सोमवार","मंगलवार","बुधवार","गुरुवार","शुक्रवार","शनिवार"];
+
+// festival data grouped by month index (0-11); each item has day `d`
+const DATA = [
+[ // January
+  {d:1, name:"अंग्रेज़ी नववर्ष", cat:"observance", desc:"ग्रेगोरियन कैलेंडर के अनुसार नए वर्ष 2026 का पहला दिन। पूरे विश्व में जश्न मनाया जाता है।", tags:["नववर्ष","ग्रेगोरियन कैलेंडर"]},
+  {d:2, name:"हज़रत अली जन्मदिवस", cat:"islamic", desc:"हज़रत अली (रज़ि.) के जन्म दिवस के उपलक्ष्य में मनाया जाने वाला इस्लामिक पर्व। इस्लामी कैलेंडर पर आधारित तिथि।", tags:["इस्लामिक कैलेंडर"]},
+  {d:13, name:"लोहड़ी", cat:"other_relig", desc:"पंजाब और उत्तर भारत में मनाया जाने वाला फसल पर्व। रात में अलाव जलाकर, तिल-गुड़ व मूंगफली चढ़ाकर लोकगीत गाए जाते हैं। मकर संक्रांति से एक दिन पहले मनाई जाती है।", tags:["फसल पर्व","पंजाब"]},
+  {d:14, name:"मकर संक्रांति / पोंगल", cat:"hindu", desc:"सूर्य के धनु राशि से मकर राशि में प्रवेश का पर्व। उत्तर भारत में खिचड़ी व पतंगबाज़ी, तमिलनाडु में 'पोंगल' के रूप में फसल उत्सव मनाया जाता है।", tags:["सूर्य संक्रांति","फसल पर्व"]},
+  {d:23, name:"वसंत पंचमी", cat:"hindu", desc:"माघ माह की शुक्ल पंचमी को विद्या व कला की देवी सरस्वती की पूजा की जाती है। पीले वस्त्र और पीले भोजन का विशेष महत्व है — बसंत ऋतु के आगमन का प्रतीक।", tags:["देवी सरस्वती","माघ शुक्ल पंचमी"]},
+  {d:26, name:"गणतंत्र दिवस", cat:"national", desc:"1950 में भारत का संविधान लागू होने की स्मृति में मनाया जाने वाला राष्ट्रीय पर्व। दिल्ली के कर्तव्य पथ पर भव्य परेड होती है।", tags:["राष्ट्रीय अवकाश","संविधान"]},
+],
+[ // February
+  {d:1, name:"गुरु रविदास जयंती", cat:"other_relig", desc:"संत गुरु रविदास जी की जयंती, माघ पूर्णिमा के दिन मनाई जाती है। समानता और भक्ति के उनके संदेश का स्मरण किया जाता है।", tags:["माघ पूर्णिमा"]},
+  {d:15, name:"महाशिवरात्रि", cat:"hindu", desc:"भगवान शिव को समर्पित सबसे प्रमुख पर्वों में से एक — फाल्गुन कृष्ण चतुर्दशी को मनाई जाती है। भक्त रातभर जागरण, उपवास और शिवलिंग पर जलाभिषेक करते हैं।", tags:["भगवान शिव","फाल्गुन कृष्ण चतुर्दशी","व्रत"]},
+  {d:19, name:"छत्रपति शिवाजी महाराज जयंती", cat:"national", desc:"मराठा साम्राज्य के संस्थापक छत्रपति शिवाजी महाराज की जयंती। महाराष्ट्र में विशेष उत्साह के साथ मनाई जाती है।", tags:["महाराष्ट्र","इतिहास"]},
+],
+[ // March
+  {d:3, name:"होलिका दहन (छोटी होली)", cat:"hindu", desc:"फाल्गुन पूर्णिमा की रात होलिका दहन किया जाता है — बुराई पर अच्छाई की जीत के प्रतीक स्वरूप अलाव जलाया जाता है, जो भक्त प्रह्लाद की कथा से जुड़ा है।", tags:["फाल्गुन पूर्णिमा","पौराणिक कथा"]},
+  {d:4, name:"होली", cat:"hindu", desc:"रंगों का त्योहार! चैत्र कृष्ण प्रतिपदा को मनाया जाने वाला यह पर्व प्रेम, मित्रता और वसंत के स्वागत का प्रतीक है। एक-दूसरे को रंग व गुलाल लगाकर उत्सव मनाया जाता है।", tags:["रंगों का पर्व","चैत्र कृष्ण प्रतिपदा"]},
+  {d:8, name:"अंतरराष्ट्रीय महिला दिवस", cat:"observance", desc:"महिलाओं की उपलब्धियों के सम्मान और लैंगिक समानता के प्रति जागरूकता के लिए मनाया जाने वाला वैश्विक दिवस।", tags:["वैश्विक दिवस"]},
+  {d:19, name:"उगादी / गुड़ी पड़वा", cat:"hindu", desc:"चैत्र शुक्ल प्रतिपदा को आंध्र प्रदेश-तेलंगाना में 'उगादी' और महाराष्ट्र में 'गुड़ी पड़वा' के नाम से नववर्ष मनाया जाता है। घरों में गुड़ी सजाई जाती है और विशेष पकवान बनते हैं।", tags:["हिंदू नववर्ष","चैत्र शुक्ल प्रतिपदा"]},
+  {d:20, name:"ईद-उल-फ़ित्र", cat:"islamic", desc:"रमज़ान के पूरे महीने के रोज़ों के समापन पर मनाया जाने वाला पर्व। सुबह विशेष नमाज़ अदा की जाती है, सेवइयां बनती हैं और ईदी दी जाती है। चांद दिखने पर तिथि में बदलाव संभव।", tags:["रमज़ान","इस्लामिक कैलेंडर"]},
+  {d:23, name:"शहीद दिवस", cat:"national", desc:"भगत सिंह, राजगुरु और सुखदेव के बलिदान दिवस के रूप में मनाया जाता है — 1931 में इसी दिन उन्हें फांसी दी गई थी।", tags:["स्वतंत्रता संग्राम"]},
+  {d:26, name:"राम नवमी", cat:"hindu", desc:"चैत्र शुक्ल नवमी को भगवान राम के जन्मोत्सव के रूप में मनाया जाता है। अयोध्या सहित देशभर में मंदिरों में विशेष पूजा-अर्चना होती है।", tags:["भगवान राम","चैत्र शुक्ल नवमी"]},
+  {d:31, name:"महावीर जयंती", cat:"other_relig", desc:"जैन धर्म के 24वें और अंतिम तीर्थंकर भगवान महावीर स्वामी की जन्म जयंती। अहिंसा और सत्य के उनके सिद्धांतों का स्मरण किया जाता है।", tags:["जैन धर्म","अहिंसा"]},
+],
+[ // April
+  {d:3, name:"गुड फ्राइडे", cat:"christian", desc:"ईसा मसीह के क्रूसारोहण की स्मृति में मनाया जाने वाला दिन — ईसाई समुदाय के लिए शोक और आत्मचिंतन का दिन।", tags:["ईसाई कैलेंडर"]},
+  {d:5, name:"ईस्टर", cat:"christian", desc:"ईसा मसीह के पुनर्जीवित होने के उपलक्ष्य में मनाया जाने वाला पर्व, ईसाई धर्म का सबसे महत्वपूर्ण त्योहार।", tags:["ईसाई कैलेंडर"]},
+  {d:14, name:"अंबेडकर जयंती / बैसाखी", cat:"national", desc:"डॉ. भीमराव अंबेडकर की जयंती के साथ-साथ पंजाब में 'बैसाखी' फसल पर्व भी इसी दिन मनाया जाता है — सिख नववर्ष और खालसा पंथ की स्थापना का भी प्रतीक।", tags:["संविधान निर्माता","फसल पर्व","सिख पर्व"]},
+],
+[ // May
+  {d:1, name:"बुद्ध पूर्णिमा", cat:"other_relig", desc:"वैशाख पूर्णिमा को भगवान बुद्ध के जन्म, ज्ञान-प्राप्ति और महापरिनिर्वाण — तीनों की स्मृति में मनाया जाता है। बौद्ध धर्म का सबसे पवित्र दिन।", tags:["भगवान बुद्ध","वैशाख पूर्णिमा"]},
+  {d:27, name:"ईद-उल-अज़हा (बकरीद)", cat:"islamic", desc:"हज़रत इब्राहीम की कुर्बानी की याद में मनाया जाने वाला पर्व। विशेष नमाज़ के बाद कुर्बानी दी जाती है और गोश्त का वितरण किया जाता है।", tags:["इस्लामिक कैलेंडर","हज"]},
+],
+[ // June
+  {d:17, name:"इस्लामिक नववर्ष", cat:"islamic", desc:"हिजरी कैलेंडर के अनुसार नए वर्ष का पहला दिन — पैगंबर मुहम्मद साहब की मक्का से मदीना की हिजरत की स्मृति में।", tags:["हिजरी कैलेंडर"]},
+  {d:21, name:"अंतरराष्ट्रीय योग दिवस", cat:"observance", desc:"योग के प्राचीन भारतीय विज्ञान के प्रति जागरूकता बढ़ाने के लिए संयुक्त राष्ट्र द्वारा घोषित वैश्विक दिवस।", tags:["स्वास्थ्य","संयुक्त राष्ट्र"]},
+  {d:26, name:"मुहर्रम", cat:"islamic", desc:"इमाम हुसैन के बलिदान की स्मृति में मनाया जाने वाला शोक पर्व — कर्बला की लड़ाई में उनकी शहादत का स्मरण।", tags:["इस्लामिक कैलेंडर","कर्बला"]},
+],
+[ // July
+  {d:16, name:"जगन्नाथ रथ यात्रा", cat:"hindu", desc:"आषाढ़ शुक्ल द्वितीया को पुरी (ओडिशा) में भगवान जगन्नाथ, बलभद्र और सुभद्रा की विशाल रथ यात्रा निकाली जाती है — लाखों श्रद्धालु रथ खींचते हैं।", tags:["पुरी ओडिशा","भगवान जगन्नाथ"]},
+  {d:29, name:"गुरु पूर्णिमा", cat:"hindu", desc:"आषाढ़ पूर्णिमा को गुरुओं के सम्मान में मनाया जाने वाला पर्व — महर्षि वेदव्यास के जन्मदिवस से भी जुड़ा है। शिष्य अपने गुरुओं का आशीर्वाद लेते हैं।", tags:["आषाढ़ पूर्णिमा","वेदव्यास"]},
+],
+[ // August
+  {d:15, name:"स्वतंत्रता दिवस", cat:"national", desc:"1947 में भारत को ब्रिटिश शासन से आज़ादी मिलने की स्मृति में मनाया जाने वाला राष्ट्रीय पर्व। लाल किले पर प्रधानमंत्री द्वारा ध्वजारोहण होता है।", tags:["राष्ट्रीय अवकाश","स्वतंत्रता संग्राम"]},
+  {d:26, name:"ओणम", cat:"hindu", desc:"केरल का सबसे बड़ा फसल पर्व — राजा महाबली के पृथ्वी पर लौटने की पौराणिक कथा से जुड़ा है। पूकलम (फूलों की रंगोली), ओणम साद्या और नौका दौड़ इसकी विशेषता है।", tags:["केरल","फसल पर्व","राजा महाबली"]},
+  {d:26, name:"ईद-ए-मिलाद", cat:"islamic", desc:"पैगंबर मुहम्मद साहब के जन्मदिन के उपलक्ष्य में मनाया जाने वाला पर्व, जिसे मीलाद-उन-नबी भी कहते हैं।", tags:["इस्लामिक कैलेंडर"]},
+  {d:28, name:"रक्षाबंधन", cat:"hindu", desc:"श्रावण पूर्णिमा को भाई-बहन के स्नेह का पर्व — बहनें भाई की कलाई पर राखी बांधकर उसकी दीर्घायु की कामना करती हैं, भाई रक्षा का वचन देते हैं।", tags:["श्रावण पूर्णिमा","भाई-बहन"]},
+],
+[ // September
+  {d:4, name:"कृष्ण जन्माष्टमी", cat:"hindu", desc:"भाद्रपद कृष्ण अष्टमी को भगवान श्रीकृष्ण के जन्मोत्सव के रूप में मनाया जाता है। मथुरा-वृंदावन में विशेष उत्सव, आधी रात को जन्म-आरती व दही-हांडी की परंपरा।", tags:["भगवान कृष्ण","मथुरा-वृंदावन"]},
+  {d:14, name:"गणेश चतुर्थी", cat:"hindu", desc:"भाद्रपद शुक्ल चतुर्थी से शुरू होने वाला 10-दिवसीय उत्सव — भगवान गणेश की मूर्ति स्थापना कर पूजा की जाती है, अनंत चतुर्दशी को विसर्जन होता है। महाराष्ट्र में विशेष भव्यता।", tags:["भगवान गणेश","महाराष्ट्र","10 दिन उत्सव"]},
+],
+[ // October
+  {d:2, name:"गांधी जयंती", cat:"national", desc:"राष्ट्रपिता महात्मा गांधी की जयंती — अहिंसा और सत्य के उनके सिद्धांतों को स्मरण करने का राष्ट्रीय पर्व।", tags:["राष्ट्रीय अवकाश","अहिंसा दिवस"]},
+  {d:19, name:"महाअष्टमी / महानवमी", cat:"hindu", desc:"शारदीय नवरात्रि के अंतिम दिनों में देवी दुर्गा की अष्टमी व नवमी पूजा — कन्या पूजन और हवन का विशेष महत्व है।", tags:["नवरात्रि","देवी दुर्गा"]},
+  {d:20, name:"दशहरा (विजयादशमी)", cat:"hindu", desc:"अश्विन शुक्ल दशमी को बुराई पर अच्छाई की जीत का पर्व — भगवान राम द्वारा रावण वध की स्मृति में रावण दहन किया जाता है। पश्चिम बंगाल में दुर्गा प्रतिमा विसर्जन।", tags:["रावण दहन","भगवान राम"]},
+  {d:29, name:"करवा चौथ", cat:"hindu", desc:"कार्तिक कृष्ण चतुर्थी को विवाहित महिलाएं पति की लंबी उम्र के लिए निर्जला व्रत रखती हैं, रात में चंद्रमा देखकर व्रत खोलती हैं।", tags:["व्रत","विवाहित महिलाएं"]},
+],
+[ // November
+  {d:8, name:"दिवाली (लक्ष्मी पूजा)", cat:"hindu", desc:"कार्तिक अमावस्या को मनाया जाने वाला सबसे बड़ा हिंदू पर्व — रोशनी का त्योहार! घरों में दीये जलाए जाते हैं, देवी लक्ष्मी व गणेश जी की पूजा होती है। भगवान राम के 14 वर्ष के वनवास के बाद अयोध्या लौटने की खुशी में मनाया जाता है।", tags:["देवी लक्ष्मी","कार्तिक अमावस्या","दीपों का पर्व"]},
+  {d:10, name:"गोवर्धन पूजा", cat:"hindu", desc:"कार्तिक शुक्ल प्रतिपदा को भगवान कृष्ण द्वारा गोवर्धन पर्वत उठाकर इंद्र के प्रकोप से गोकुलवासियों की रक्षा करने की कथा के उपलक्ष्य में मनाया जाता है।", tags:["भगवान कृष्ण","गोवर्धन पर्वत"]},
+  {d:11, name:"भाई दूज", cat:"hindu", desc:"कार्तिक शुक्ल द्वितीया को भाई-बहन के प्रेम का पर्व — बहनें भाई को तिलक लगाकर उसकी दीर्घायु की कामना करती हैं।", tags:["भाई-बहन","कार्तिक शुक्ल द्वितीया"]},
+  {d:15, name:"छठ पूजा", cat:"hindu", desc:"बिहार, झारखंड व पूर्वी उत्तर प्रदेश का प्रमुख पर्व — सूर्य देव व छठी मैया की उपासना। 4 दिवसीय कठिन व्रत, अस्ताचल व उदयगामी सूर्य को अर्घ्य दिया जाता है।", tags:["बिहार","सूर्य देव","4 दिन व्रत"]},
+  {d:24, name:"गुरु नानक जयंती", cat:"other_relig", desc:"सिख धर्म के प्रथम गुरु, गुरु नानक देव जी का प्रकाश पर्व — कार्तिक पूर्णिमा को मनाया जाता है। गुरुद्वारों में अखंड पाठ व नगर कीर्तन होते हैं।", tags:["सिख धर्म","कार्तिक पूर्णिमा"]},
+],
+[ // December
+  {d:25, name:"क्रिसमस", cat:"christian", desc:"ईसा मसीह के जन्मदिवस के उपलक्ष्य में मनाया जाने वाला पर्व — घरों को सजाया जाता है, क्रिसमस ट्री लगाया जाता है और केक व उपहारों का आदान-प्रदान होता है।", tags:["ईसाई कैलेंडर","विश्वव्यापी"]},
+]
+];
+
+// group festivals by day-of-month for quick lookup per month
+function festivalsFor(mi, day){
+  return DATA[mi].filter(f => f.d === day);
+}
+
+const grid = document.getElementById('calendarGrid');
+
+MONTHS.forEach((mName, mi) => {
+  const monthDiv = document.createElement('div');
+  monthDiv.className = 'month';
+  const monthNum = String(mi+1).padStart(2,'0');
+  monthDiv.innerHTML = `<h2>${mName} <span class="num">2026 · ${monthNum}</span></h2>`;
+
+  const wdRow = document.createElement('div');
+  wdRow.className = 'weekdays';
+  WEEKDAYS.forEach(w => {
+    const s = document.createElement('span');
+    s.textContent = w;
+    wdRow.appendChild(s);
+  });
+  monthDiv.appendChild(wdRow);
+
+  const daysDiv = document.createElement('div');
+  daysDiv.className = 'days';
+
+  const startDow = START_DOW[mi];
+  const totalDays = DAYS_IN_MONTH[mi];
+
+  // leading empty cells
+  for(let i=0;i<startDow;i++){
+    const empty = document.createElement('span');
+    empty.className = 'cell empty';
+    daysDiv.appendChild(empty);
+  }
+
+  for(let day=1; day<=totalDays; day++){
+    const dow = (startDow + (day-1)) % 7;
+    const fests = festivalsFor(mi, day);
+    const cell = document.createElement('button');
+    cell.className = 'cell' + (fests.length ? ' has-fest' : '') + (dow===0 ? ' sun' : '');
+    cell.innerHTML = `<span>${day}</span>`;
+    if(fests.length){
+      const dotsWrap = document.createElement('div');
+      dotsWrap.className = 'fest-dots';
+      fests.forEach(f=>{
+        const dotEl = document.createElement('i');
+        dotEl.style.background = CAT[f.cat].color;
+        dotsWrap.appendChild(dotEl);
+      });
+      cell.appendChild(dotsWrap);
+      cell.addEventListener('click', () => openCard(fests, mName, day, DAY_NAME[dow]));
+    } else {
+      cell.disabled = true;
+    }
+    daysDiv.appendChild(cell);
+  }
+
+  monthDiv.appendChild(daysDiv);
+  grid.appendChild(monthDiv);
+});
+
+// diya row - ambient touch
+const diyaRow = document.getElementById('diyaRow');
+for(let i=0;i<9;i++){
+  const s = document.createElement('span');
+  s.className = 'diya';
+  s.textContent = '🪔';
+  diyaRow.appendChild(s);
+}
+let diyaIdx = 0;
+setInterval(()=>{
+  const diyas = diyaRow.querySelectorAll('.diya');
+  diyas.forEach(d=>d.classList.remove('lit'));
+  for(let i=0;i<=diyaIdx;i++){ diyas[i]?.classList.add('lit'); }
+  diyaIdx = (diyaIdx+1) % diyas.length;
+}, 500);
+
+const overlay = document.getElementById('overlay');
+function openCard(fests, mName, day, dayName){
+  const body = document.getElementById('cardBody');
+  body.innerHTML = '';
+  fests.forEach(f => {
+    const block = document.createElement('div');
+    block.className = 'fest-block';
+    const tagsHtml = f.tags.map(t=>`<span>${t}</span>`).join('');
+    block.innerHTML = `
+      <div class="badge" style="color:${CAT[f.cat].color}">${CAT[f.cat].label}</div>
+      <h3>${f.name}</h3>
+      <div class="date-line">${day} ${mName} 2026, ${dayName}</div>
+      <div class="desc">${f.desc}</div>
+      <div class="meta">${tagsHtml}</div>
+    `;
+    body.appendChild(block);
+  });
+  overlay.classList.add('show');
+}
+document.getElementById('closeBtn').addEventListener('click', ()=>overlay.classList.remove('show'));
+overlay.addEventListener('click', (e)=>{ if(e.target===overlay) overlay.classList.remove('show'); });
+document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') overlay.classList.remove('show'); });
+</script>
+</body>
+</html>
