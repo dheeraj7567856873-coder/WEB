@@ -1,0 +1,304 @@
+/* Additive styles only — the original expencetraker.css is untouched.
+   Covers the new authentication screens, landing page and avatar widget,
+   reusing the exact same design tokens as the tracker. */
+
+.auth-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 28px 18px;
+  font-family: var(--font-body);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  padding: 30px 28px;
+}
+
+.auth-card.wide {
+  max-width: 900px;
+  text-align: center;
+  padding: 44px 34px;
+}
+
+.auth-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.auth-brand .brand-mark {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--grad-3), var(--grad-4));
+  color: #fff;
+  font-weight: 800;
+  font-family: var(--font-display);
+}
+
+.auth-brand span {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.4rem;
+  letter-spacing: -0.02em;
+}
+
+.auth-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-top: 14px;
+}
+
+.auth-sub {
+  color: var(--text-secondary);
+  text-align: center;
+  font-size: 0.9rem;
+  margin: 6px 0 20px;
+}
+
+.auth-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding: 5px;
+  border-radius: var(--radius-md);
+  background: rgba(127, 127, 160, 0.14);
+  margin-bottom: 20px;
+}
+
+.auth-tab {
+  border: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.92rem;
+  padding: 10px;
+  border-radius: calc(var(--radius-md) - 4px);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.auth-tab.active {
+  background: linear-gradient(135deg, var(--grad-3), var(--grad-4));
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 14px;
+}
+
+.auth-field label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+}
+
+.auth-field input {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg-solid);
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-field input:focus {
+  border-color: var(--grad-3);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.22);
+}
+
+.auth-btn {
+  width: 100%;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 13px;
+  border-radius: var(--radius-md);
+  color: #fff;
+  background: linear-gradient(135deg, var(--grad-3), var(--grad-4));
+  box-shadow: 0 10px 26px rgba(124, 58, 237, 0.28);
+  transition: transform 0.15s ease, filter 0.2s ease;
+  margin-top: 6px;
+}
+
+.auth-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+}
+
+.auth-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth-btn.secondary {
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  box-shadow: none;
+}
+
+.auth-link {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--accent-balance);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auth-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.auth-note {
+  margin-top: 16px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.auth-alert {
+  border-radius: var(--radius-sm);
+  padding: 11px 13px;
+  font-size: 0.85rem;
+  margin-bottom: 14px;
+  border: 1px solid transparent;
+}
+
+.auth-alert.error {
+  background: rgba(251, 113, 133, 0.14);
+  border-color: rgba(251, 113, 133, 0.45);
+  color: var(--accent-expense);
+}
+
+.auth-alert.success {
+  background: rgba(16, 185, 129, 0.14);
+  border-color: rgba(16, 185, 129, 0.45);
+  color: var(--accent-income);
+}
+
+/* Landing */
+.landing-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 5vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+  margin-top: 18px;
+}
+
+.landing-title em {
+  font-style: normal;
+  background: linear-gradient(120deg, var(--accent-balance), var(--grad-4));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.landing-sub {
+  color: var(--text-secondary);
+  font-size: 1.02rem;
+  max-width: 560px;
+  margin: 16px auto 26px;
+  line-height: 1.65;
+}
+
+.landing-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.landing-actions .auth-btn {
+  width: auto;
+  min-width: 190px;
+}
+
+.landing-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-top: 38px;
+  text-align: left;
+}
+
+.landing-feature {
+  background: var(--glass-bg-solid);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 18px;
+}
+
+.landing-feature strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  margin-bottom: 6px;
+}
+
+.landing-feature span {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+/* Avatar widget inside the profile page */
+.avatar-ring {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(135deg, var(--grad-3), var(--grad-4));
+  margin: 0 auto;
+}
+
+.avatar-img,
+.avatar-initials {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: grid;
+  place-items: center;
+  background: var(--glass-bg-solid);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+}
